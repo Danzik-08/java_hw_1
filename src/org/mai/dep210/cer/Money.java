@@ -1,9 +1,12 @@
 package org.mai.dep210.cer;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
 
 public class Money {
+
+
     private Currency currency;
     private BigDecimal amount;
 
@@ -21,18 +24,28 @@ public class Money {
     }
 
     public Money add(Money m) {
-        throw new NotImplementedException();
+        checkCurrencies(m);
+        return new Money(this.currency, amount.add(m.getAmount()));
     }
 
     public Money subtract(Money m) {
-        throw new NotImplementedException();
+        checkCurrencies(m);
+        return new Money(this.currency, amount.subtract(m.getAmount()));
     }
 
     public Money multiply(BigDecimal ratio) {
-        throw new NotImplementedException();
+        return new Money(this.currency, amount.multiply(ratio).setScale(currency.getDefaultFractionDigits(), RoundingMode.HALF_UP));
     }
 
-    public Money devide(BigDecimal ratio) {
-        throw new NotImplementedException();
+    public Money divide(BigDecimal ratio) {
+        return new Money(this.currency, amount.divide(ratio, RoundingMode.FLOOR));
+    }
+
+    private void checkCurrencies(Money m) {
+        if (!this.currency.equals(m.getCurrency())) {
+            throw new DifferentCurrenciesException(
+                    String.format("Different currencies: [%s] and [%s]", this.currency, m.getCurrency())
+            );
+        }
     }
 }

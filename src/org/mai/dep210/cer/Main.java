@@ -27,5 +27,17 @@ public class Main {
         //should set usdMoney 95 with scale 2
         usdMoney = usdMoney.subtract(poundToUsd.convert(tenPound));
         System.out.println(usdMoney.getAmount().equals(new BigDecimal(95).setScale(2)));
+
+        System.out.println(usdMoney.divide(new BigDecimal("0.553432")).getAmount());
+        System.out.println(usdMoney.divide(new BigDecimal("0.510232432")).getAmount());
+        System.out.println(usdMoney.multiply(new BigDecimal("0.5545435123")).getAmount());
+        System.out.println(usdMoney.multiply(new BigDecimal("0.4912234")).getAmount());
+
+        for (int i = 0; i < 3; ++i) {
+            System.out.println(usdMoney.divide(new BigDecimal("3")).getAmount());
+        }
+        for (int i = 0; i < 7; ++i) {
+            System.out.println(usdMoney.divide(new BigDecimal("7")).getAmount());
+        }
     }
 }
